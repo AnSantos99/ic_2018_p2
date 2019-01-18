@@ -1,0 +1,49 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int **d;
+int i;
+int u = 1;
+
+int sum(){
+	int s = 0;
+	for(int i = 0; i<4; i++){
+	d[i] = (int *)calloc(4,sizeof(int));
+	}
+	for(int i = 0; i<4; i++){
+		for(int j = 0; j<4; j++){
+		d[i][j] = i+j;
+		s += d[i][j];
+		if (u < 10)  {
+			printf("+-----#[%d]------", u);
+			u++;
+		}
+		
+		
+		else {
+			printf("+-----#[%d]-----", u);
+			u++;
+		}
+			
+		
+		}
+		
+	for (int o = 0; o<6; o++){
+			printf("\n|               |               |               |               |");
+		}
+		
+		printf("\n");
+		
+	}
+return s;	
+}
+
+
+int main() {
+
+	
+	d = (int **)calloc(4, sizeof(int));
+	printf("%d",sum());
+
+}
