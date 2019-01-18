@@ -24,7 +24,7 @@ O objectivo do jogo é chegar primeiro aos 6 pontos: cada aldeia vale 1 ponto e 
 
 Preços:
 - Aldeia: B + L + G + W
-- Cidade: G + G + O + O + O
+- Cidade: G + G + I + I + I
 
 ## Invocação do programa
 O programa deve aceitar como único parâmetro um ficheiro de configuração em formato [INI]<sup>[4](#fn4)</sup>, de acordo com o seguinte exemplo:
@@ -82,3 +82,15 @@ Deve ser submetido um ficheiro `zip` com os seguintes conteúdos:
   * Referências:
     * Incluindo trocas de ideias com colegas, código aberto reutilizado e
       bibliotecas de terceiros utilizadas. Devem ser o mais detalhados possível.
+
+
+
+## Exemplos de Execução
+
+### Leitura do Ficheiro de inicialização e apresentação na consola
+
+O ficheiro de inicialização deverá ser passado como argumento. Após a sua leitura e interpretação, o programa deverá mostrar o mapa. A Figura seguinte mostra uma possível implementação utilizando a consola.
+![Exemplo de leitura do mapa](readingMap.png)
+
+Encontra-se também disponível o ficheiro .ini correspondente ao exemplo.
+

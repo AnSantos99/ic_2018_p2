@@ -1,0 +1,311 @@
+/*----------------JOGO SETTLERS OF CATAN----------------*/
+
+/* Exercicio final computação
+Ana dos Santos - a21801899
+Ana Sofia Carvalho - a21802128
+Diana Ascencao Levay - a21801515 */
+
+//ATENCAO AS VARIAVEIS//
+
+#include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <malloc.h>
+
+
+int **d;
+int i;
+int u = 0;
+
+int lista[4][4] = {{'N','N','N','N',}, {'S','S','S','S',}, {'E','E','E','E',}, {'W','W','W','W',}};
+
+int sum(){
+	int s = 0;
+	for(int i = 0; i<4; i++){
+	d[i] = (int *)calloc(4,sizeof(int));
+	}
+	for(int i = 0; i<4; i++){
+		for(int j = 0; j<4; j++){
+		d[i][j] = i+j;
+		s += d[i][j];
+		if (u < 10 && u != 3 && u != 7)  {
+			printf("+-----#[%d]------", u);
+			u++;
+		}
+		
+		else if (u == 3 || u == 7 )  {
+			printf("+------#[%d]-----+", u);
+			u++;
+		}
+		
+		else if (u >= 10 && u != 11 && u != 15){
+			printf("+-----#[%d]-----", u);
+			u++;
+		}
+		
+		else if (u == 11 || u == 15 )  {
+			printf("+-----#[%d]-----+", u);
+			u++;
+		}
+			
+		
+		}
+		
+	for (int o = 0; o<4; o++){
+			printf("\n|      %s        |      %s        |      %s        |      %s        |",&lista[o][o],&lista[o][o],&lista[o][o],&lista[o][o]);
+		}
+		
+		printf("\n");		
+	}
+return s;	
+}
+
+
+/*----------------------------------------------------------------------------------------------
+
+//ReadLines
+//Le as linhas de um ficheiro
+//Retorna um array de linhas (char**) e o numero de linhas
+void **ReadLines(FILE *file)
+{
+ char **lineBuffer = (char**)malloc(sizeof(char**));
+ lineBuffer[0] = (char*)malloc(sizeof(char));
+ char ch = getc(file);
+ int count = 0;
+ int lineCount = 0;
+ while ((ch != EOF))
+ {
+ //printf("K");
+//fflush (stdout);
+  lineBuffer[lineCount] = (char*)realloc((char*)lineBuffer[lineCount], sizeof(char) * ((int)strlen(lineBuffer[lineCount]) + 1));
+  ((char*)lineBuffer[lineCount])[count] = ch;
+  count++;
+  ch = getc(file);
+  if ((ch == '\n'))
+  {
+  
+   lineBuffer[lineCount] = (char*)realloc((char*)lineBuffer[lineCount], sizeof(char) * ((int)strlen(lineBuffer[lineCount]) + 1));
+   ((char*)lineBuffer[lineCount])[count] = '\0';
+   count = 0;
+   lineCount++;
+   lineBuffer = (char**)realloc((char**)lineBuffer, sizeof(char**) * (lineCount + 1));
+   lineBuffer[lineCount] = (char*)malloc(sizeof(char));
+  }
+  else if (ch == EOF)
+  {
+   lineBuffer[lineCount] = (char*)realloc((char*)lineBuffer[lineCount], sizeof(char) * ((int)strlen(lineBuffer[lineCount]) + 1));
+   ((char*)lineBuffer[lineCount])[count] = '\0';
+  }
+ }
+ void **a = (void**)malloc(sizeof(void**) * 2);
+ a[0] = (void*)lineBuffer;
+ a[1] = (void*)lineCount;
+ return a;
+}
+
+int ParseToInt(char *text){
+	return (int)strtol(text, NULL, 10);
+}
+*/
+//----------------------FUNCOES------------------------//
+
+typedef struct player{
+	char  name[20];	//player names
+	int  inventory;
+	int  score;
+	int  choice;	
+	int  villages;
+	//char * options;
+}player;
+
+struct player player1, player2; //Place in MAIN??
+
+///int village_choice(){}
+
+// invocação ini
+
+int lancarDado (int* dado1, int* dado2) {
+  srand((int) time (NULL));
+  *dado1 = 1 + (rand()%7);
+  sleep(1);
+  *dado2 = 1 + (rand()%7);
+  return *dado1, *dado2;
+}
+
+/*/funcao da troca do banco
+int trocaCartas (int carta, int carta2) {
+  carta = 0;
+}
+
+//funcao da troca do banco por ponto
+int trocaPonto (int* cartaEscolhida, int* score) {
+  if (cartaEscolhida in inventory) {
+    *carta -= 10;
+    *score += 1;}
+}*/
+
+
+int main(int argc, char* argv[]) {
+ /*//FILE * file;
+ //file = fopen(argv[1], "r");
+ //printf("H");
+
+ //Le as linhas
+ void **data = ReadLines(file);
+ //printf("L");
+ fflush (stdout);
+ //retira as linhas de data
+ char **lines = (char**)data[0];
+ //Retira o numero de linhas de data
+ int lineCount = (int)data[1];
+ //percorre o array de linhas imprime e liberta da memória as linhas
+ for(int i = 0; i <= lineCount; i++)
+ {
+  printf("%s", lines[i]);
+  free(lines[i]);
+ }
+ //Liberta da memoria as linhas
+ free(lines);
+ //Liberta da memória data
+ free(data);
+ //fechar ficeiro
+ //fclose(file); */
+
+	d = (int **)calloc(4, sizeof(int));
+		printf("%d",sum());
+		printf("+---------------+---------------+--------------+---------------+\n");
+    
+  struct player player1 = {"ALEX", 23, 0, 3,5 };
+  struct player player2 = {"BATATA ", 11, 1, 4, 2};
+    
+  char play = 'y';
+
+	
+  // begin the program
+  do{   
+    // welcome message + asking if player wants 1v1 or vs ai
+	printf("%s\n", player1.name);
+	printf("%d\n", player2.score);
+     int welcome = 0;
+
+    if (welcome == 0){
+      printf("*** Welcome to Settlers of Catan! ***\n\n");
+      // printf("do you wish to play against another person or an ai?");
+      // int choice = getchar();
+      //if choice blah blah
+      welcome ++;
+    }
+
+    // verify if player has reached 6 points and won
+    int score = 0;
+    
+    if (score >= 6) {
+      printf("you reached 6 points first! You win! \n\n");
+      break; 
+      play = 'n';
+    } 
+
+    /// print mapa e pergunta onde quer aldeia!!!! ADD
+
+    // print inventory + score - pointers! 
+    printf("current inventory: \n" 
+    "wool(W): \n"
+    "brick(B): \n"
+    "lumber(L): \n"
+    "grain(G): \n"
+    "iron(I): \n"
+    "desert(D): \n\n");
+    printf("score: \n\n");
+
+  //lançar dados
+    int dado1, dado2;
+    lancarDado(&dado1, &dado2);
+    printf("dados:\n%d + %d = %d \n\n ", dado1, dado2, dado1+dado2);
+
+    //print main option menu and ask for input
+    printf("Main menu: \n\n"
+    "[A] Buy an adjacent village \n"
+    "[B] Transform village into city! (double resources) \n"
+    "[C] Bank exchange - 4 units for 1 unit \n"
+    "[D] Bank exchange - 10 units for one point \n"
+    "[E] Pass to next player \n"
+    "[F] Help\n\n");
+    printf("Please select option:\n");
+    int option = getchar();
+
+  // Option A - Buy a village
+    if (option == 'A'|| option == 'a'){
+    getchar(); 
+    continue;
+    }  
+
+
+    // Option B - Transform into city 
+    else if (option == 'B' || option == 'b'){  
+      getchar();     
+      continue;
+      }  
+
+    // Option C - Bank exchange (4 to 1 card)
+    else if (option == 'C' || option == 'c'){
+      //trocaPonto(&carta, &score);
+      getchar(); 
+      continue;
+      }
+
+    // Option D - Bank exchange (10 to 1 point)
+    else if (option == 'D' || option == 'd'){
+
+      getchar(); 
+      continue;
+      } 
+
+    // Option E - pass turn to next player
+    else if (option == 'E' || option == 'e'){
+      //assumo q aqui tenhamos algo q permita por player False e recomeçe o loop para o outro
+      getchar(); 
+      continue;
+      } 
+
+    // Option F - instructions / help 
+    else if (option == 'F' || option == 'f'){
+
+      printf("\n*****************\n"
+      "This is settlers of Catan \n\n"
+      "in order to win, you must obtain 6 points before your opponent!\n\n"
+      "you started off by choosing a village placement, that village will be the base of your game\n\n"
+      "if you wish to get another village (adjacent to your main one), press [A] on the menu! \nMake sure you have these cards though: B + L + G + W\n\n"
+      "however, you can expand your village into a city by pressing [B]! \nYou'll need this combination: G + G + I + I + I \n\n"
+      "You can exchange 4 cards of a unit for a single cart of a unit of your choosing with [C]\n\n"
+      "By clicking [D], you can exchange 10 unit cards for one point. \n\n"
+      "Pressing [E] allows you to pass your turn to the other player\n"
+      "Please enjoy the game!\n\n"
+      "*****************\n\n");
+      getchar(); 
+      continue;
+    } 
+
+    else if (option == 'X' || option == 'x'){
+      getchar(); 
+      break;
+      } 
+
+    else {
+      printf("invalid answer! Try again \n");
+      getchar();   
+      continue;
+      } 
+
+      play = 'n';
+      welcome = 0;
+      printf("Would you like to play again? 'y'");
+      getchar();
+      printf("\n");
+
+    }
+  
+  while (play == 'y');
+    return 0; 
+}
