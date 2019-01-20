@@ -1,0 +1,75 @@
+PROJETO DE COMPUTAÇÃO - settlers of catan
+Entrega - dia 22 de Jan
+- ficheiro .c e .h, Makefile Doxyfile e .gitignore
+- pasta escondida .git
+- README.md formato Markdown (link a esse doc soon dá para ir fazendo)
+-- vai implicar um fluxograma e manual do utilizador convem ir fazendo
+Elementos do grupo:
+Ana dos Santos - a21801899
+Ana Sofia Carvalho - a21802128 
+Diana Ascenção Levay - a21801515
+
+Links úteis até agora:
+- https://github.com/VideojogosLusofona/ic_2018_p2#fn4​ - link do projeto
+- https://gist.github.com/sareon/1365808​ - jogo em pygame com interface basico
+- https://github.com/search?q=settlers+of+Catan
+- https://we.tl/t-7BLMZQ8Fi9​ - como fazer em java tirar refs
+- https://processing.org/tutorials/2darray/​ -multiple arrays.
+
+Requisitos:
+- SEM GLOBALS
+- SEM GO-TO
+- mapa - matriz ou vetor dinâmico (ver calloc -
+https://www.tutorialspoint.com/c_standard_library/c_function_calloc.htm​ ////
+https://www.geeksforgeeks.org/calloc-versus-malloc/​)
+- Makefile obrigatório!!
+- git obrigatório - Grupo N mencionado pelo stor após mandar o tal mail
+- pede-se ao user info do mapa em formato “INI” (ver INI -
+https://whatis.techtarget.com/fileformat/INI-Initialization-file-Generic​)
+Supostamente o stor quer uma versão simplificada do jogo mas usando a tal biblioteca G2 do powerpoint da aula 9 deve ser possível fazer um mapa com os hexágonos a cores diferentes na boa
+temos 2 dados - random
+        
+ RESPOSTAS DO STOR:
+1. - Opção 1: Player vs player - Opção 2: Player vs AI
+- caso que fazer a extra mile. Nesse caso aconselho a que todas as decisões da AI sejam tomadas de forma aleatória... Irei colocar mais alguns detalhes sobre este tema, mas aconselho a fazerem primeiro player vs player e depois num branch separado implementarem a AI.
+2. - Ao escolher o local para colocar a sua primeira aldeia, o jogador recebe os recursos que estão nesse local.
+3. - a dimensão da grelha, assim como a distribuição dos recursos e números associados são passados no ficheiro de inicialização. Está um exemplo desse ficheiro junto ao enunciado.
+
+NEW UPDATE
+encontrei uma cena num slide do stor sobre o chamar files para um programa em c ainda não experimentei porque fiquei bue parva quando vi aquilo depois de ter procurado como uma doida e se isto não funcionar EHEM WELL i GUESS WE DIE THEN!!
+#include​ ​<stdio.h>
+  int​ main ​()​ ​{
+ FILE ​*​fp​;
+ ​char​ str​[​60​];
+ ​/* opening file for reading */
+  fp ​=​ fopen​(​"file.txt"​ ​,​ ​"r"​);​
+← this bitch
+ ​if​(​fp ​==​ NULL​)​ ​{
+ perror​(​"Error opening file"​);
+ ​return​(-​1​);
+ ​}
+
+  ​if​(​ fgets ​(​str​,​ ​60​,​ fp​)!=​NULL ​)​ ​{
+ ​}
+​/* writing content to stdout */
+ puts​(​str​);
+  fclose​(​fp​);
+ ​return​(​0​); }
+IT SAY’S SIMPLE ZZzzz
+---> ​https://github.com/benhoyt/inih https://github.com/benhoyt/inih/blob/master/ini.c Podemos usar struct para facilitar a nossa vida i think.
+
+Infos iniciais:
+Pretende-se desenvolver uma versão simplificada do jogo Settlers of Catan. O jogo é turn based e decorre sobre um mapa 2D como o da Figura 1. Cada posição do mapa tem terrenos adjacentes a Norte (N), Sul (S), Este (E) e Oeste (O) que produzem recursos naturais e que estão associados a números. Os recursos naturais existentes são: wool (W), brick (B), lumber (L), grain (G), iron (I) ou desert (D).
+No início do jogo, cada jogador escolhe um local para instalar a sua primeira aldeia (A). Em cada jogada, o jogador lança dois dados. Todos os jogadores que tenham aldeias em posições com terrenos adjacentes cujo número for igual à soma dos dois dados, ganham uma carta com os recursos naturais produzidos pelos terrenos adjacentes. Por exemplo, considerando o mapa da Figura 1, se a soma dos dois dados lançados for 9, o PL1 recebe uma carta de Wool e o PL2 recebe uma carta de Grain. Para expandir o seu território cada jogador terá de colocar aldeias nos locais ligados a uma aldeia sua. Por exemplo no mapa da Figura 1, o PL1 só poderá construir uma aldeia
+     
+nos locais com coordenadas #5, #8, #10 e #13. O PL2 só poderá construir aldeias nos locais com coordenadas #1, #3, #6.
+Nota que o lançamento de dois dados implica que alguns números têm maior probabilidade de sair do que outros...
+O PL1 escolhe primeiro a posição da sua aldeia e em seguida o PL2 escolhe a posição da sua aldeia. Cada posição só pode pertencer a um jogador e se já estiver ocupada, não pode ser escolhida.
+Quando chega a sua vez, o jogador tem obrigatoriamente de lançar os dados antes de fazer qualquer outra acção. Depois dos dados lançados enquanto tiver recursos para isso, o jogador pode:
+
+Preços:
+
+Comprar uma aldeia e coloca-la numa posição adjacente
+Transformar uma aldeia (A) sua numa cidade (C). Quando o jogador tem uma cidade, os terrenos adjacentes passam a produzir duas unidades de recurso natural em vez de uma. Efectuar uma troca com o banco ao rácio 4 para 1. Para isso o jogador pode trocar 4 unidades iguais de um recurso natural, por uma carta de um recurso natural que necessite. Efectuar uma troca com o banco: 10 cartas igual em troca de um ponto.
+Passar a vez ao outro jogador O objectivo do jogo é chegar primeiro aos 6 pontos: cada aldeia vale 1 ponto e cada cidade vale 2 pontos.
+Aldeia:B+L+G+W Cidade:G+G+O+O+O
