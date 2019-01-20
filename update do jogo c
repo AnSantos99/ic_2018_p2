@@ -1,0 +1,348 @@
+/*----------------SETTLERS OF CATAN GAME----------------*/
+
+/* Exercicio final computação
+Ana dos Santos - a21801899
+Ana Sofia Carvalho - a21802128
+Diana Ascencao Levay - a21801515 */
+
+#include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <malloc.h>
+
+// invocação ini??
+
+
+// defining each player
+typedef struct player{
+	char name[20];
+	int  switcho; // switch between players in loop
+	int  score;
+	int  choice; //first village
+	int  grain;
+	int  iron;
+	int  desert;
+	int  wool;
+	int  brick;
+	int  lumber;
+	int  villages; //villages and cities owned
+}player;
+
+struct player playerx, player1, player2; 
+
+void showInventory(struct player plyr) {
+    printf("your village: %d \n\n current inventory: \n wool(W): %d \n brick(B): %d \n lumber(L): %d \n grain(G): %d \n iron(I): %d \n\n score: %d \n\n",plyr.choice, plyr.wool, plyr.brick, plyr.lumber, plyr.grain, plyr.iron, plyr.score);
+}
+
+
+//funcion that rolls the dice
+int rollDice (int* dice1, int* dice2) {
+	srand((int) time (NULL));
+	*dice1 = 1 + (rand()%7);
+	sleep(1);
+	*dice2 = 1 + (rand()%7);
+	return *dice1, *dice2;
+}
+
+//funcion that asks each player to place their village
+void village_choice (struct player *plyr) {
+	printf("choose a number to place your village in, %s\n",(*plyr).name);
+	int choice = getchar();
+	getchar();
+	if (choice == '0'){
+	(*plyr).choice = 0;
+	printf("chosen village: #%c\n", choice);
+	}
+	
+	else if (choice == '1'){
+	(*plyr).choice = 1;
+	printf("chosen village: #%c\n", choice);
+	}
+	
+	else if (choice == '2'){
+	(*plyr).choice = 2;
+	printf("chosen village: #%c\n", choice);
+	}
+	
+	else if (choice == '3'){
+	(*plyr).choice = 3;
+	printf("chosen village: #%c\n", choice);
+	}
+	
+	else if (choice == '4'){
+	(*plyr).choice = 4;
+	printf("chosen village: #%c\n", choice);
+	}
+	
+	else if (choice == '5'){
+	(*plyr).choice = 5;
+	printf("chosen village: #%c\n", choice);
+	}
+	
+	else if (choice == '6'){
+	(*plyr).choice = 6;
+	printf("chosen village: #%c\n", choice);
+	}
+	
+	else if (choice == '7'){
+	(*plyr).choice = 7;
+	printf("chosen village: #%c\n", choice);
+	}
+	
+	else if (choice == '8'){
+	(*plyr).choice = 8;
+	printf("chosen village: #%c\n", choice);
+	}
+	
+	else if (choice == '9'){
+	(*plyr).choice = 9;
+	printf("chosen village: #%c\n", choice);
+	}
+	
+	else if (choice == '10'){
+	(*plyr).choice = 0;
+	printf("chosen village: #%c\n", choice);
+	}
+	
+	else if (choice == '11'){
+	(*plyr).choice = 11;
+	printf("chosen village: #%c\n", choice);
+	}
+
+	else if (choice == '12'){
+	(*plyr).choice = 11;
+	printf("chosen village: #%c\n", choice);
+	}
+	
+	else if (choice == '13'){
+	(*plyr).choice = 13;
+	printf("chosen village: #%c\n", choice);
+	}
+	
+	else if (choice == '14'){
+	(*plyr).choice = 14;
+	printf("chosen village: #%c\n", choice);
+	}
+	
+	else if (choice == '15'){
+	(*plyr).choice = 15;
+	printf("chosen village: #%c\n", choice);
+	}
+} 	
+
+//function to exchange 4 cards for 1
+int cardExchange (struct player *plyr) {
+  printf("choose the letter of the resource to trade (you will lose 4 cards) %s\n");
+  int card1 = getchar();
+  getchar();
+  
+  //wool(W): %d \n brick(B): %d \n lumber(L): %d \n grain(G): %d \n iron(I):
+  printf("choose the letter of the resource to obtain (you will get 1 card) %s\n");
+  int card2 = getchar();
+  getchar();
+  
+  if (card1 == 'W' || card1 == 'w') {
+  	(*plyr).wool -= 4;
+  }
+  
+  if (card2 == 'B' || card1 == 'b') {
+  	(*plyr).brick += 1;
+  }
+  
+}
+
+//function to exchange 10 cards for 1 point
+int pointExchange (struct player *plyr) {
+  printf("choose the letter of the resource to trade (you will lose 4 cards) %s\n");
+  int card = getchar();
+  getchar();
+
+  if (card == 'W' || card == 'w') {
+	(*plyr).wool -= 10;
+	(*plyr).score += 1;
+	}
+  if (card == 'B' || card == 'b') {
+	(*plyr).brick -= 10;
+	(*plyr).score += 1;
+	}
+  if (card == 'L' || card == 'l') {
+	(*plyr).lumber -= 10;
+	(*plyr).score += 1;
+	}
+  if (card == 'G' || card == 'g') {
+	(*plyr).grain -= 10;
+	(*plyr).score += 1;
+	}
+  if (card == 'I' || card == 'i') {
+	(*plyr).iron -= 10;
+	(*plyr).score += 1;
+	}	 		
+        
+}
+
+
+int main() {
+
+//print the map
+	int **d;
+    	int i;
+    	int u = 0;
+	int s = 0;
+	int map[4][4] = {{'N','N','N','N',}, {'S','S','S','S',}, {'E','E','E','E',}, {'W','W','W','W',}};
+	
+	for(int i = 0; i<4; i++) {
+	    d[i] = (int *)calloc(4,sizeof(int));
+	}
+	
+	for(int i = 0; i<4; i++){
+	    for(int j = 0; j<4; j++){
+    		d[i][j] = i+j;
+    		s += d[i][j];
+		if (u < 10 && u != 3 && u != 7)  {
+		    printf("+-----#[%d]------", u);
+			u++;
+		}
+		
+		else if (u == 3 || u == 7 )  {
+			printf("+------#[%d]-----+", u);
+			u++;
+		}
+		
+		else if (u >= 10 && u != 11 && u != 15){
+			printf("+-----#[%d]-----", u);
+			u++;
+		}
+		
+		else if (u == 11 || u == 15 )  {
+			printf("+-----#[%d]-----+", u);
+			u++;
+		}	
+	}
+		
+	for (int o = 0; o<4; o++){
+			printf("\n|      %s        |      %s        |      %s        |      %s        |",&map[o][o],&map[o][o],&map[o][o],&map[o][o]);
+		}
+		
+    	printf("\n");		
+	}
+
+	d = (int **)calloc(4, sizeof(int));
+	printf("+---------------+---------------+--------------+---------------+\n");
+	
+ 
+  //define both players
+  struct player player1 = {"player 1",0, 0, 0, 20, 20, 20, 20, 20, 20, 0 };
+  struct player player2 = {"player 2",1, 1, 1, 10, 10, 10, 10, 10, 10, 1 };
+  struct player playerx = player1;
+  
+  //define and begin the playing loop  
+  char play = 'y';
+  int welcome = 0;
+
+  do{   
+  
+
+    // welcome message + asking if player wants 1v1 or vs ai
+	printf("%s\n", playerx.name);
+
+     //for only printing the welcome message and village choice once
+    
+     
+    if (welcome <= 0){
+      printf("*** Welcome to Settlers of Catan! ***\n\n");
+      village_choice(&player1);
+      village_choice(&player2);
+      welcome += 1;
+      continue;
+ 
+    }
+
+
+    // verify if player has reached 6 points and won
+    if (playerx.score >= 6) {
+      printf("you reached 6 points first! You win! \n\n");
+      break; 
+      play = 'n';
+    } 
+
+    // print inventory + score
+    showInventory(playerx);
+
+    //roll the dice
+    int dice1, dice2;
+    rollDice(&dice1, &dice2);
+    printf("dice:\n%d + %d = %d \n\n ", dice1, dice2, dice1+dice2);
+
+    //print main option menu and ask for input
+    printf("Main menu: \n\n"
+    "[A] Buy an adjacent village \n"
+    "[B] Transform village into city! (double resources) \n"
+    "[C] Bank exchange - 4 units for 1 unit \n"
+    "[D] Bank exchange - 10 units for one point \n"
+    "[E] Pass to next player \n"
+    "[F] Help\n"
+    "[X] Exit Game\n\n");
+    printf("Please select option:\n");
+   
+    int option = getchar();
+    getchar();
+  // Option A - Buy a village
+    if (option =='A'|| option == 'a'){
+    continue;
+    }  
+
+    // Option B - Transform into city 
+    else if (option == 'B' || option == 'b'){      
+      continue;
+      }  
+
+    // Option C - Bank exchange (4 to 1 card)
+    else if (option == 'C' || option == 'c'){
+      cardExchange (&playerx);
+      continue;
+      }
+
+    // Option D - Bank exchange (10 to 1 point)
+    else if (option == 'D' || option == 'd'){
+      pointExchange(&playerx);
+      continue;
+      } 
+
+    // Option E - pass turn to next player
+    else if (option == 'E' || option == 'e'){
+      if (playerx.switcho == 0) {
+      	playerx = player2;
+      }
+      else if (playerx.switcho == 1) {
+      	playerx = player1;
+      }
+      continue;
+      } 
+
+    // Option F - instructions / help 
+    else if (option == 'F' || option == 'f'){
+      printf("DISPLAY INSTRUCTIONS\n");
+      continue;
+    } 
+
+    else if (option == 'X' || option == 'x'){ 
+      break;
+      } 
+   
+    else {
+      printf("invalid answer! Try again \n");  
+      continue;
+      } 
+
+      play = 'n';
+      welcome = 0;
+      printf("Would you like to play again? 'y'");
+      printf("\n");
+
+    }
+  
+  while (play == 'y');
+    return 0; 
+}
